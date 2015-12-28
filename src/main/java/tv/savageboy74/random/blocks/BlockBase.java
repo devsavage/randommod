@@ -43,6 +43,7 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 import tv.savageboy74.random.RandomMod;
+import tv.savageboy74.random.client.ModCreativeTab;
 import tv.savageboy74.random.tileentity.TileEntityBase;
 import tv.savageboy74.random.util.ItemStackSrc;
 
@@ -54,8 +55,9 @@ public class BlockBase extends BlockContainer
   protected boolean hasSubtypes = false;
   private Class<? extends TileEntity> tileEntityType = null;
 
-  protected BlockBase(Material materialIn) {
+  public BlockBase(Material materialIn) {
     super(materialIn);
+    this.setCreativeTab(ModCreativeTab.randomTab);
   }
 
   public static <T> T getTileEntity(IBlockAccess world, int x, int y, int z, Class<T> clazz) {

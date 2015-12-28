@@ -1,7 +1,7 @@
-package tv.savageboy74.random.itemblocks;
+package tv.savageboy74.random.client;
 
 /*
- * ItemBlockRandom.java
+ * ModCreativeTab.java
  * Copyright (C) 2015 Savage - github.com/savageboy74
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,27 +23,19 @@ package tv.savageboy74.random.itemblocks;
  * THE SOFTWARE.
  */
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.util.StatCollector;
 import tv.savageboy74.random.RandomMod;
-import tv.savageboy74.random.util.NBTHelper;
 
-import java.util.List;
-
-public class ItemBlockRandom extends ItemBlock
+public class ModCreativeTab
 {
-  public ItemBlockRandom(Block block) {
-    super(block);
-  }
-
-  @Override
-  public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean par4) {
-    if(itemStack.stackTagCompound != null) {
-      String teleportPos = EnumChatFormatting.DARK_GREEN + "Configured Position: X: " + NBTHelper.getInt(itemStack, "TeleportPosX") + " Y: " + NBTHelper.getInt(itemStack, "TeleportPosY") + " Z: " + NBTHelper.getInt(itemStack, "TeleportPosZ");
-      list.add(teleportPos);
+  public static final CreativeTabs randomTab = new CreativeTabs(RandomMod.MODID) {
+    @Override
+    public Item getTabIconItem() {
+      return RandomMod.itemRandom;
     }
-  }
+  };
 }

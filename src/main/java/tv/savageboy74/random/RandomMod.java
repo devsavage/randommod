@@ -24,15 +24,21 @@ package tv.savageboy74.random;
  */
 
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import tv.savageboy74.random.blocks.BlockRandom;
-import tv.savageboy74.random.itemblocks.ItemBlockRandom;
-import tv.savageboy74.random.items.ItemRandom;
+import tv.savageboy74.random.blocks.BlockLinkEraser;
+import tv.savageboy74.random.blocks.BlockTeleporter;
+import tv.savageboy74.random.client.ModCreativeTab;
+import tv.savageboy74.random.itemblocks.ItemBlockLinkEraser;
+import tv.savageboy74.random.itemblocks.ItemBlockTeleporter;
+import tv.savageboy74.random.items.ItemTeleporterLinker;
+import tv.savageboy74.random.proxy.CommonProxy;
 
 @Mod(modid = RandomMod.MODID, version = RandomMod.VERSION, name = RandomMod.MODNAME)
 public class RandomMod
@@ -40,30 +46,45 @@ public class RandomMod
   @Mod.Instance(RandomMod.MODID)
   public static RandomMod instance;
 
+  @SidedProxy(serverSide = "tv.savageboy74.random.proxy.CommonProxy", clientSide = "tv.savageboy74.random.proxy.ClientProxy")
+  public static CommonProxy proxy;
+
   public static final String MODID = "randommod";
   public static final String MODNAME = "RandomMod";
-  public static final String VERSION = "1.7.10-1.1";
+  public static final String VERSION = "1.7.10-1.0.2";
 
-  public static Item itemRandom = new ItemRandom();
-  public static Block blockRandom = new BlockRandom();
+  public static Item itemRandom = new ItemTeleporterLinker();
+  public static Block blockRandom = new BlockTeleporter();
+  public static Block blockLinkEraser = new BlockLinkEraser();
 
   @Mod.EventHandler
   public void preInit(FMLPreInitializationEvent event) {
     initBlocks();
     initItems();
+    proxy.preInit();
   }
 
   @Mod.EventHandler
-  public void init(FMLInitializationEvent event) {}
+  public void init(FMLInitializationEvent event) {
+    proxy.init();
+  }
 
   @Mod.EventHandler
-  public void postInit(FMLPostInitializationEvent event) {}
+  public void postInit(FMLPostInitializationEvent event) {
+    proxy.postInit();
+  }
+
+  @Mod.EventHandler
+  public void serverStarting(FMLServerStartingEvent event) {
+    proxy.serverStarting();
+  }
 
   private void initItems() {
     GameRegistry.registerItem(itemRandom, "itemRandom");
   }
 
   private void initBlocks() {
-    GameRegistry.registerBlock(blockRandom, ItemBlockRandom.class, "blockRandom");
+    GameRegistry.registerBlock(blockRandom, ItemBlockTeleporter.class, "blockRandom");
+    GameRegistry.registerBlock(blockLinkEraser, ItemBlockLinkEraser.class, "blockLinkEraser");
   }
 }

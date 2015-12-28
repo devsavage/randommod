@@ -1,7 +1,7 @@
 package tv.savageboy74.random.blocks;
 
 /*
- * BlockRandom.java
+ * BlockTeleporter.java
  * Copyright (C) 2015 Savage - github.com/savageboy74
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -34,41 +34,42 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import tv.savageboy74.random.RandomMod;
-import tv.savageboy74.random.tileentity.TileEntityRandom;
+import tv.savageboy74.random.client.ModCreativeTab;
+import tv.savageboy74.random.tileentity.TileEntityTeleporter;
 import tv.savageboy74.random.util.*;
 
 import java.util.Random;
 
-public class BlockRandom extends BlockBase
+public class BlockTeleporter extends BlockBase
 {
-  public BlockRandom() {
+  public BlockTeleporter() {
     super(Material.rock);
     this.setHardness(0.9F);
     this.setResistance(1.1F);
     this.setUnlocalizedName("blockRandom");
-    this.setTileEntity(TileEntityRandom.class);
-    this.setCreativeTab(CreativeTabs.tabBlock);
+    this.setTileEntity(TileEntityTeleporter.class);
   }
 
   @Override
   public TileEntity createTileEntity(World world, int metadata) {
-    return new TileEntityRandom();
+    return new TileEntityTeleporter();
   }
 
   @Override
   public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ) {
-    TileEntityRandom tileEntityRandom = TileHelper.getTileEntity(worldIn, x, y, z, TileEntityRandom.class);
+    TileEntityTeleporter tileEntityTeleporter = TileHelper.getTileEntity(worldIn, x, y, z, TileEntityTeleporter.class);
 
     if(player.getHeldItem() != null && player.getHeldItem().getItem() == RandomMod.itemRandom)
       return false;
 
-    if(tileEntityRandom == null)
+    if(tileEntityTeleporter == null)
       return false;
 
-    if(!tileEntityRandom.isActivated())
+    if(!tileEntityTeleporter.isActivated())
       return false;
 
-    player.setPositionAndRotation(tileEntityRandom.getTeleportPosX(), tileEntityRandom.getTeleportPosY(), tileEntityRandom.getTeleportPosZ(), tileEntityRandom.getTeleportPosYaw(), tileEntityRandom.getTeleportPosPitch());
+    player.setPositionAndRotation(tileEntityTeleporter.getTeleportPosX(), tileEntityTeleporter.getTeleportPosY(), tileEntityTeleporter.getTeleportPosZ(), tileEntityTeleporter.getTeleportPosYaw(), tileEntityTeleporter.getTeleportPosPitch());
+    player.playSound("mob.endermen.portal", 1.0F, 1.0F);
 
     return true;
   }
@@ -85,16 +86,16 @@ public class BlockRandom extends BlockBase
       ItemStack stack = new ItemStack(this);
 
 
-      if(te instanceof TileEntityRandom) {
-        TileEntityRandom tileEntityRandom = (TileEntityRandom) te;
+      if(te instanceof TileEntityTeleporter) {
+        TileEntityTeleporter tileEntityTeleporter = (TileEntityTeleporter) te;
 
-        if(tileEntityRandom.isActivated()) {
+        if(tileEntityTeleporter.isActivated()) {
 
-          double posX = tileEntityRandom.getTeleportPosX();
-          double posY = tileEntityRandom.getTeleportPosY();
-          double posZ = tileEntityRandom.getTeleportPosZ();
-          float  posYaw = tileEntityRandom.getTeleportPosYaw();
-          float  posPitch = tileEntityRandom.getTeleportPosPitch();
+          double posX = tileEntityTeleporter.getTeleportPosX();
+          double posY = tileEntityTeleporter.getTeleportPosY();
+          double posZ = tileEntityTeleporter.getTeleportPosZ();
+          float  posYaw = tileEntityTeleporter.getTeleportPosYaw();
+          float  posPitch = tileEntityTeleporter.getTeleportPosPitch();
 
           if(stack.getTagCompound() == null) {
             stack.setTagCompound(new NBTTagCompound());
@@ -128,7 +129,7 @@ public class BlockRandom extends BlockBase
   @Override
   public void onBlockPlacedBy(World worldIn, int x, int y, int z, EntityLivingBase placer, ItemStack itemIn) {
     if(itemIn.stackTagCompound != null) {
-      TileEntityRandom tileEntityRandom = (TileEntityRandom) worldIn.getTileEntity(x, y, z);
+      TileEntityTeleporter tileEntityTeleporter = (TileEntityTeleporter) worldIn.getTileEntity(x, y, z);
 
       double posX = NBTHelper.getDouble(itemIn, "TeleportPosX");
       double posY = NBTHelper.getDouble(itemIn, "TeleportPosY");
@@ -136,7 +137,7 @@ public class BlockRandom extends BlockBase
       float  posYaw = NBTHelper.getFloat(itemIn, "TeleportPosYaw");
       float  posPitch = NBTHelper.getFloat(itemIn, "TeleportPosPitch");
 
-      tileEntityRandom.setTeleportPos(posX, posY, posZ, posYaw, posPitch);
+      tileEntityTeleporter.setTeleportPos(posX, posY, posZ, posYaw, posPitch);
     }
 
     super.onBlockPlacedBy(worldIn, x, y, z, placer, itemIn);

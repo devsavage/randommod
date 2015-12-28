@@ -1,5 +1,9 @@
+#Creative Tab
+itemGroup.randommod=Random Tab
+
 # Items
-item.randommod:itemRandom.name=Teleporter Linker
+item.randommod:itemRandom.name=Wand of Geolocation
 
 # Blocks
-tile.randommod:blockRandom.name=Teleporter
+tile.randommod:blockRandom.name=Block of Teleportation
+tile.randommod:blockLinkEraser.name=Block of Erasing

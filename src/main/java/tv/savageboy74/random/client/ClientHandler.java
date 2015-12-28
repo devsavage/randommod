@@ -1,7 +1,7 @@
-package tv.savageboy74.random.util;
+package tv.savageboy74.random.client;
 
 /*
- * TileHelper.java
+ * ClientHandler.java
  * Copyright (C) 2015 Savage - github.com/savageboy74
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,18 +23,15 @@ package tv.savageboy74.random.util;
  * THE SOFTWARE.
  */
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockAccess;
-import tv.savageboy74.random.tileentity.TileEntityTeleporter;
+import cpw.mods.fml.common.FMLCommonHandler;
+import net.minecraftforge.common.MinecraftForge;
 
-public class TileHelper
+public class ClientHandler
 {
-  public static <T> T getTileEntity(IBlockAccess world, int x, int y, int z, Class<T> clazz) {
-    TileEntity tileEntity = world.getTileEntity(x, y, z);
-    return !clazz.isInstance(tileEntity) ? null : (T) tileEntity;
+  public void init() {
+    MinecraftForge.EVENT_BUS.register(TeleporterRenderer.INSTANCE);
+    FMLCommonHandler.instance().bus().register(TeleporterRenderer.INSTANCE);
   }
 
-  public static boolean isTeleporter(Object o) {
-    return o != null && (o instanceof TileEntityTeleporter);
-  }
+  public void postInit() {}
 }

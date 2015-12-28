@@ -1,7 +1,7 @@
 package tv.savageboy74.random.util;
 
 /*
- * TileHelper.java
+ * Coord.java
  * Copyright (C) 2015 Savage - github.com/savageboy74
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,18 +23,57 @@ package tv.savageboy74.random.util;
  * THE SOFTWARE.
  */
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockAccess;
-import tv.savageboy74.random.tileentity.TileEntityTeleporter;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileHelper
+public class Coord
 {
-  public static <T> T getTileEntity(IBlockAccess world, int x, int y, int z, Class<T> clazz) {
-    TileEntity tileEntity = world.getTileEntity(x, y, z);
-    return !clazz.isInstance(tileEntity) ? null : (T) tileEntity;
+  public int dim;
+  public double x;
+  public double y;
+  public double z;
+
+  public Coord(int dim, MovingObjectPosition mop)
+  {
+    this.dim = dim;
+
+    switch (mop.typeOfHit)
+    {
+      case BLOCK:
+        this.x = mop.blockX;
+        this.y = mop.blockY;
+        this.z = mop.blockZ;
+        break;
+      case ENTITY:
+        this.x = mop.entityHit.posX;
+        this.y = mop.entityHit.posY;
+        this.z = mop.entityHit.posZ;
+        break;
+    }
   }
 
-  public static boolean isTeleporter(Object o) {
-    return o != null && (o instanceof TileEntityTeleporter);
+  public Coord offset(int side)
+  {
+    ForgeDirection dir = ForgeDirection.getOrientation(side);
+    this.x = +dir.offsetX;
+    this.y = +dir.offsetY;
+    this.z = +dir.offsetZ;
+
+    return this;
+  }
+
+  public int hashCode()
+  {
+    return (int) this.x + ((int) this.z << 8) + ((int) this.y << 16) + (this.dim << 24);
+  }
+
+  public boolean equals(Object obj)
+  {
+    if (obj instanceof Coord)
+    {
+      Coord coord = (Coord) obj;
+      return this.x == coord.x && this.y == coord.y && this.z == coord.z && this.dim == coord.dim;
+    }
+    return false;
   }
 }

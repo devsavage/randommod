@@ -1,7 +1,7 @@
 package tv.savageboy74.random.items;
 
 /*
- * ItemRandom.java
+ * ItemTeleporterLinker.java
  * Copyright (C) 2015 Savage - github.com/savageboy74
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,25 +25,27 @@ package tv.savageboy74.random.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
-import tv.savageboy74.random.tileentity.TileEntityRandom;
+import tv.savageboy74.random.client.ModCreativeTab;
+import tv.savageboy74.random.tileentity.TileEntityTeleporter;
 import tv.savageboy74.random.util.LogHelper;
 import tv.savageboy74.random.util.NBTHelper;
 import tv.savageboy74.random.util.TileHelper;
 
 import java.util.List;
 
-public class ItemRandom extends ItemBase
+public class ItemTeleporterLinker extends ItemBase
 {
-  public ItemRandom() {
+  public ItemTeleporterLinker() {
     this.setUnlocalizedName("itemRandom");
-    this.setCreativeTab(CreativeTabs.tabMisc);
   }
 
   @Override
@@ -51,7 +53,6 @@ public class ItemRandom extends ItemBase
     if(player.isSneaking()) {
       if(itemStackIn.stackTagCompound == null) {
         itemStackIn.stackTagCompound = new NBTTagCompound();
-        LogHelper.info("onItemRightClick >> itemStackIn.stackTagCompound == null >>> Creating a new NBTTagCompound!");
       }
 
       NBTHelper.setDouble(itemStackIn, "TeleportPosX", player.posX);
@@ -61,7 +62,6 @@ public class ItemRandom extends ItemBase
       NBTHelper.setFloat(itemStackIn, "TeleportPosPitch", player.rotationPitch);
 
       player.playSound("random.successful_hit", 1.0F, 1.0F);
-      LogHelper.info("onItemRightClick >> Set Coords and Rotation");
     }
 
     return itemStackIn;
@@ -71,34 +71,31 @@ public class ItemRandom extends ItemBase
   public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_) {
     if(!player.isSneaking()) {
       if(itemStack.stackTagCompound == null) {
-        LogHelper.info("onItemUse >> itemStack.stackTagCompound == null");
         return false;
       }
 
-      TileEntityRandom tileEntityRandom = TileHelper.getTileEntity(world, x, y, z, TileEntityRandom.class);
-      if(tileEntityRandom != null) {
+      TileEntityTeleporter tileEntityTeleporter = TileHelper.getTileEntity(world, x, y, z, TileEntityTeleporter.class);
+      if(tileEntityTeleporter != null) {
         double posX = NBTHelper.getDouble(itemStack, "TeleportPosX");
         double posY = NBTHelper.getDouble(itemStack, "TeleportPosY");
         double posZ = NBTHelper.getDouble(itemStack, "TeleportPosZ");
         float  posYaw = NBTHelper.getFloat(itemStack, "TeleportPosYaw");
         float  posPitch = NBTHelper.getFloat(itemStack, "TeleportPosPitch");
 
-        tileEntityRandom.setTeleportPos(posX, posY, posZ, posYaw, posPitch);
-        player.playSound("random.successful_hit", 1.0F, 1.0F);
-        LogHelper.info("onItemUse >> tileEntityRandom != null");
+        tileEntityTeleporter.setTeleportPos(posX, posY, posZ, posYaw, posPitch);
+        player.playSound("random.wood_click", 1.0F, 1.0F);
 
         return true;
       }
     }
 
-    LogHelper.info("onItemUse >> returned false");
     return false;
   }
 
   @Override
   public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean par4) {
     if(itemStack.stackTagCompound != null) {
-      String teleportPos = EnumChatFormatting.GREEN + "Position: X: " + NBTHelper.getInt(itemStack, "TeleportPosX") + " Y: " + NBTHelper.getInt(itemStack, "TeleportPosY") + " Z: " + NBTHelper.getInt(itemStack, "TeleportPosZ");
+      String teleportPos = EnumChatFormatting.GREEN + "Linked Position: X: " + NBTHelper.getInt(itemStack, "TeleportPosX") + " Y: " + NBTHelper.getInt(itemStack, "TeleportPosY") + " Z: " + NBTHelper.getInt(itemStack, "TeleportPosZ");
       list.add(teleportPos);
     }
   }

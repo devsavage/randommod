@@ -1,7 +1,7 @@
-package tv.savageboy74.random.util;
+package tv.savageboy74.random.blocks;
 
 /*
- * TileHelper.java
+ * BlockLinkEraser.java
  * Copyright (C) 2015 Savage - github.com/savageboy74
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,18 +23,33 @@ package tv.savageboy74.random.util;
  * THE SOFTWARE.
  */
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+import tv.savageboy74.random.RandomMod;
+import tv.savageboy74.random.client.ModCreativeTab;
 import tv.savageboy74.random.tileentity.TileEntityTeleporter;
 
-public class TileHelper
+public class BlockLinkEraser extends BlockBase
 {
-  public static <T> T getTileEntity(IBlockAccess world, int x, int y, int z, Class<T> clazz) {
-    TileEntity tileEntity = world.getTileEntity(x, y, z);
-    return !clazz.isInstance(tileEntity) ? null : (T) tileEntity;
+  public BlockLinkEraser() {
+    super(Material.cactus);
+    this.setHardness(0.1F);
+    this.setResistance(0.1F);
+    this.setUnlocalizedName("blockLinkEraser");
   }
 
-  public static boolean isTeleporter(Object o) {
-    return o != null && (o instanceof TileEntityTeleporter);
+  @Override
+  public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ) {
+    if(player.getCurrentEquippedItem().getItem() == RandomMod.itemRandom) {
+      ItemStack stack = player.getCurrentEquippedItem();
+      stack.stackTagCompound = null;
+      return true;
+    }
+
+    return false;
   }
 }

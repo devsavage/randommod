@@ -29,11 +29,13 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import tv.savageboy74.random.RandomMod;
+import tv.savageboy74.random.client.ModCreativeTab;
 
 public class ItemBase extends Item
 {
   public ItemBase() {
     super();
+    this.setCreativeTab(ModCreativeTab.randomTab);
   }
 
   @Override

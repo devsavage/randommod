@@ -1,7 +1,7 @@
 package tv.savageboy74.random.tileentity;
 
 /*
- * TileEntityRandom.java
+ * TileEntityTeleporter.java
  * Copyright (C) 2015 Savage - github.com/savageboy74
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,7 +26,7 @@ package tv.savageboy74.random.tileentity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityRandom extends TileEntityBase
+public class TileEntityTeleporter extends TileEntityBase
 {
   private double teleportX = 0;
   private double teleportY = 0;
@@ -35,7 +35,7 @@ public class TileEntityRandom extends TileEntityBase
   private float teleportPitch = 0;
   private boolean activated = false;
 
-  public TileEntityRandom() {
+  public TileEntityTeleporter() {
 
   }
 

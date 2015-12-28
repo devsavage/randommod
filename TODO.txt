@@ -1,0 +1,3 @@
+-- Allow player to name the teleporter and display its name in the info box.
+-- Portable teleporter?
+-- Add gui to create a name for the teleporter

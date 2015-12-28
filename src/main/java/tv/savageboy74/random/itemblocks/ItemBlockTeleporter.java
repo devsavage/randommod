@@ -1,7 +1,7 @@
-package tv.savageboy74.random.util;
+package tv.savageboy74.random.itemblocks;
 
 /*
- * TileHelper.java
+ * ItemBlockTeleporter.java
  * Copyright (C) 2015 Savage - github.com/savageboy74
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,18 +23,28 @@ package tv.savageboy74.random.util;
  * THE SOFTWARE.
  */
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockAccess;
-import tv.savageboy74.random.tileentity.TileEntityTeleporter;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
+import tv.savageboy74.random.RandomMod;
+import tv.savageboy74.random.client.ModCreativeTab;
+import tv.savageboy74.random.util.NBTHelper;
 
-public class TileHelper
+import java.util.List;
+
+public class ItemBlockTeleporter extends ItemBlock
 {
-  public static <T> T getTileEntity(IBlockAccess world, int x, int y, int z, Class<T> clazz) {
-    TileEntity tileEntity = world.getTileEntity(x, y, z);
-    return !clazz.isInstance(tileEntity) ? null : (T) tileEntity;
+  public ItemBlockTeleporter(Block block) {
+    super(block);
   }
 
-  public static boolean isTeleporter(Object o) {
-    return o != null && (o instanceof TileEntityTeleporter);
+  @Override
+  public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean par4) {
+    if(itemStack.stackTagCompound != null) {
+      String teleportPos = EnumChatFormatting.DARK_GREEN + "Linked Position: X: " + NBTHelper.getInt(itemStack, "TeleportPosX") + " Y: " + NBTHelper.getInt(itemStack, "TeleportPosY") + " Z: " + NBTHelper.getInt(itemStack, "TeleportPosZ");
+      list.add(teleportPos);
+    }
   }
 }

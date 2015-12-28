@@ -1,7 +1,7 @@
-package tv.savageboy74.random.util;
+package tv.savageboy74.random.proxy;
 
 /*
- * TileHelper.java
+ * ClientProxy.java
  * Copyright (C) 2015 Savage - github.com/savageboy74
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,18 +23,29 @@ package tv.savageboy74.random.util;
  * THE SOFTWARE.
  */
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockAccess;
-import tv.savageboy74.random.tileentity.TileEntityTeleporter;
+import tv.savageboy74.random.client.ClientHandler;
 
-public class TileHelper
+public class ClientProxy extends CommonProxy
 {
-  public static <T> T getTileEntity(IBlockAccess world, int x, int y, int z, Class<T> clazz) {
-    TileEntity tileEntity = world.getTileEntity(x, y, z);
-    return !clazz.isInstance(tileEntity) ? null : (T) tileEntity;
+  private ClientHandler clientHandler;
+
+  @Override
+  public void preInit() {
+    super.preInit();
+
+    clientHandler = new ClientHandler();
   }
 
-  public static boolean isTeleporter(Object o) {
-    return o != null && (o instanceof TileEntityTeleporter);
+  @Override
+  public void init() {
+    super.init();
+    clientHandler.init();
+  }
+
+  @Override
+  public void postInit() {
+    super.postInit();
+
+    clientHandler.postInit();
   }
 }
