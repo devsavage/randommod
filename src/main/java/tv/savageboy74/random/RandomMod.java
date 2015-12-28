@@ -1,16 +1,5 @@
 package tv.savageboy74.random;
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import tv.savageboy74.random.blocks.BlockRandom;
-import tv.savageboy74.random.itemblocks.ItemBlockRandom;
-import tv.savageboy74.random.items.ItemRandom;
-
 /*
  * RandomMod.java
  * Copyright (C) 2015 Savage - github.com/savageboy74
@@ -33,6 +22,17 @@ import tv.savageboy74.random.items.ItemRandom;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import tv.savageboy74.random.blocks.BlockRandom;
+import tv.savageboy74.random.itemblocks.ItemBlockRandom;
+import tv.savageboy74.random.items.ItemRandom;
 
 @Mod(modid = RandomMod.MODID, version = RandomMod.VERSION, name = RandomMod.MODNAME)
 public class RandomMod
