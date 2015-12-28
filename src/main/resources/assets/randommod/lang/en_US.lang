@@ -1,0 +1,5 @@
+# Items
+item.randommod:itemRandom.name=Teleporter Linker
+
+# Blocks
+tile.randommod:blockRandom.name=Teleporter

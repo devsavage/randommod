@@ -1,0 +1,16 @@
+[
+  {
+    "modid": "randommod",
+    "name": "RandomMod",
+    "description": "A random mod",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["savageboy74"],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
